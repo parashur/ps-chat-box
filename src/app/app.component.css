@@ -1,0 +1,99 @@
+p {
+  font-family: Lato;
+}
+
+a.button {
+  display: block;
+  position: relative;
+  float: left;
+  width: 120px;
+  padding: 0;
+  margin: 10px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+}
+
+.btnBlueGreen {
+  background: #00AE68;
+}
+
+
+/* 3D */
+.btnBlueGreen.btnPush {
+  box-shadow: 0px 5px 0px 0px #007144;
+}
+
+
+.chat-container {
+    display:block;
+    width:100%;
+}
+.chat-container:nth-child(4) {
+    opacity: .8;
+}
+.chat-container:nth-child(3) {
+    opacity: .6;
+}
+.chat-container:nth-child(2) {
+    opacity: .4;
+}
+
+.chat-container {
+    /* font-weight:bold; */
+    color:rgb(236, 218, 245);
+    font-size:.9em;
+    letter-spacing:1px;
+}
+
+.chat-container  {
+    background:#323035;
+    padding:1em;
+    color:white;
+    margin: 5px 0 10px 0; 
+    border-radius: 5px;
+}
+.form-control {
+    outline:none;
+   background:#323035;
+    padding:.5em;
+    color:white;
+     border: 0px;
+    border-radius: 0px;
+}
+.form-control:focus {
+  outline: 0 !important;
+  border: 0px;
+   border-radius: 0px;
+  border-color: none !important;
+  box-shadow: none !important;
+}
+
+button {
+     background:#383535;
+    padding:.6em;
+        border: 1px;
+        border-color:#a13737;
+    border-radius: 0px;
+       color:white;
+       height:40px
+}
+button:hover {
+         cursor: pointer;
+         box-shadow: 50px 10px solid black;
+    }
+
+    button:focus {
+      outline: none !important;
+    }
+
+.input-group-text {
+   outline:none;
+   border: 0px;
+   padding-top: 10px;
+   font-size:18px;
+   background:#323035;
+}

@@ -1,0 +1,30 @@
+.logo {
+   width:100%;
+  height:100%;
+ /* align-content: center;
+  justify-content: center;
+  display: flex; */
+}
+
+@media only screen and(max-width:600px) {
+  .logo {
+    width:50%;
+    height:50%;
+  }
+}
+.username {
+  border-radius:50px;
+  border:none;
+  padding:0.3rem;
+}
+.username:focus {
+  outline:none;
+}
+
+.btn {
+  border-radius:30px;
+  border:none;
+  font-size:0.8rem;
+  padding: 0.5rem 2rem;
+  background: rgb(39, 38, 39);
+}

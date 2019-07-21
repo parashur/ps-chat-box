@@ -1,0 +1,27 @@
+<hello name="{{ name }}"></hello>
+<div class="ool">
+	<div class="col pr-3">
+		<div class="row">
+			<div class="col pr-2">
+				<input type="text" autocomplete="off" class="form-control" id="val" 
+        (keyup.enter)="addItem()">
+      </div>
+    <div class="col-3 pl-2">
+      <button class="btn" (click)="addItem()">send</button>
+     </div>
+  </div>
+</div>
+<br/>
+	<ul id="message">
+		<li [ngClass]="{'text-info': username==item.username, 'text-white': username!=item.username}" *ngFor="let item of items | async">
+			{{item.title}} -- {{item.username}}
+		</li>
+	</ul>
+<!-- <button (click)="addItem()">Add Item</button> -->
+<div class="col d-flex text-right align-items-end">
+  <div class="col pt-5">
+<!-- <button class="ml-5" (click)="getDataByKey()">Show Item</button> -->
+<!-- <button (click)="updateItem()">Update Item</button> -->
+<button class="btn" (click)="deleteEverything()">Delete All</button>
+</div>
+</div>
