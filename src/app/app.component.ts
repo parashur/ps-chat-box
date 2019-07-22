@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   // items: FirebaseListObservable<any>;
   msgVal: string = '';
   itemsRef;
-  itemsRefBackup
+  itemsRefBackup;
   items = [];
   itemsBackup = [];
   username;
