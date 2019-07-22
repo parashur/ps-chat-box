@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-
 import {postsData} from './data';
+import { LocalStorageService } from 'ngx-store';
+import { Router } from '@angular/router';
 export interface ViewMemoriesItem {
   name: string;
   id: number;
@@ -23,32 +24,48 @@ export class AppComponent implements OnInit {
   messages= [];
   // items: FirebaseListObservable<any>;
   msgVal: string = '';
-itemsRef;
-items = [];
-  constructor(private afd: AngularFireDatabase) {
-    this.itemsRef = afd.list('posts');
+  itemsRef;
+  itemsRefBackup
+  items = [];
+  itemsBackup = [];
+  username;
+  constructor(private afd: AngularFireDatabase, private ls: LocalStorageService, private router: Router) {
+    this.itemsRef = afd.list('pschats');
+    this.itemsRefBackup = afd.list('pschatsbackup');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })      );
+    });
+    this.itemsBackup = this.itemsRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })      );
     });
   }
 
   ngOnInit() {
-    // this.subscription = this.db.list<ViewMemoriesItem>('memories').valueChanges().subscribe(d=>{
-    //   console.log('data streaming', d);
-    //   this.messages = (d);
-    // });    
-     const data = this.afd.object('/posts').valueChanges().subscribe(val => {
+     const data = this.afd.object('/pschats').valueChanges().subscribe(val => {
       console.log(val);
     });
-    console.log(new Date())
+     this.afd.object('/pschatsbackup').valueChanges().subscribe(val => {
+      console.log(val);
+    });
+    // console.log(new Date())
+    if(this.ls.get('username')) {
+      this.username  = this.ls.get('username');
+    } else {
+      this.router.navigate(['/login'])
+    }
   }
 
   addItem(newName: string) {
     const data = (<HTMLInputElement>document.getElementById('val')).value;
     if(data){
     this.itemsRef.push({
-      title:data  
+      title:data,
+      username: this.username
+    });
+    this.itemsRefBackup.push({
+      title:data,
+      username: this.username
     });
     (<HTMLInputElement>document.getElementById('val')).value = "";
     }
