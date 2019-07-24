@@ -9,6 +9,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
 import { WebStorageModule } from 'ngx-store';
+import { ImgPreviewComponent } from './img-preview/img-preview.component';
 
 export const firebase = {
   apiKey: "AIzaSyAAbOpC7XLZjmu9MJ0HtiiuQXxAhM0GOYE",
@@ -31,7 +32,7 @@ export const firebase = {
   AppComponent, 
   HelloComponent, 
   ChatComponent, 
-  LoginComponent],
+  LoginComponent, ImgPreviewComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

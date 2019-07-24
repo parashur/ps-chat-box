@@ -26,10 +26,16 @@ export class ChatComponent implements OnInit {
   itemsRef;
   items = [];
   username;
+  itemsRefIMG;
+  itemsImageList = [];
   constructor(private afd: AngularFireDatabase, private ls: LocalStorageService) {
     this.itemsRef = afd.list('posts');
+     this.itemsRefIMG = afd.list('psimagtest');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
+     this.itemsImageList = this.itemsRefIMG.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
   }
@@ -60,6 +66,32 @@ export class ChatComponent implements OnInit {
   deleteEverything() {
     this.itemsRef.remove();
   }
+
+  
+handleFileSelect(evt) {
+  var f = evt.target.files[0]; // FileList object
+  var reader = new FileReader();
+  // Closure to capture the file information.
+  reader.onload = (function(theFile) {
+    return function(e) {
+      var binaryData = e.target.result;
+      //Converting Binary Data to base 64
+      var base64String = window.btoa(binaryData);
+      //showing file converted to base64
+      const data = {
+        img: (base64String).toString()
+      };
+         console.log(base64String);
+       if(base64String) {
+       this.itemsImageList.push(data);
+          evt.target.value = [];
+        }
+      alert('File converted to base64 successfuly!\nCheck in Textarea');
+    };
+  })(f);
+  // Read in the image file as a data URL.
+  reader.readAsBinaryString(f);
+}
 
 
   // getComments() {

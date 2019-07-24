@@ -29,9 +29,10 @@ export class AppComponent implements OnInit {
   items = [];
   itemsBackup = [];
   username;
+  files;
   constructor(private afd: AngularFireDatabase, private ls: LocalStorageService, private router: Router) {
-    this.itemsRef = afd.list('pschats');
-    this.itemsRefBackup = afd.list('pschatsbackup');
+    this.itemsRef = afd.list('pschats-4');
+    this.itemsRefBackup = afd.list('pschatsbackup-4');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })      );
@@ -42,12 +43,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-     const data = this.afd.object('/pschats').valueChanges().subscribe(val => {
+     const data = this.afd.object('/pschats-1').valueChanges().subscribe(val => {
       console.log(val);
     });
-     this.afd.object('/pschatsbackup').valueChanges().subscribe(val => {
-      console.log(val);
-    });
+    //  this.afd.object('/pschatsbackup').valueChanges().subscribe(val => {
+    //   console.log(val);
+    // });
     // console.log(new Date())
     if(this.ls.get('username')) {
       this.username  = this.ls.get('username');
@@ -63,10 +64,10 @@ export class AppComponent implements OnInit {
       title:data,
       username: this.username
     });
-    this.itemsRefBackup.push({
-      title:data,
-      username: this.username
-    });
+    // this.itemsRefBackup.push({
+    //   title:data,
+    //   username: this.username
+    // });
     (<HTMLInputElement>document.getElementById('val')).value = "";
     }
   }
@@ -79,6 +80,38 @@ export class AppComponent implements OnInit {
     this.itemsRef.remove();
   }
 
+ readFile() {
+  
+  if (this.files && this.files[0]) {
+    
+    var FR= new FileReader();
+    
+    FR.addEventListener("load", function(e) {
+     console.log(e.target);
+    }); 
+    
+    FR.readAsDataURL( this.files[0] );
+  }
+  
+}
+
+handleFileSelect(evt) {
+  var f = evt.target.files[0]; // FileList object
+  var reader = new FileReader();
+  // Closure to capture the file information.
+  reader.onload = (function(theFile) {
+    return function(e) {
+      var binaryData = e.target.result;
+      //Converting Binary Data to base 64
+      var base64String = window.btoa(binaryData);
+      //showing file converted to base64
+        (<HTMLInputElement>document.getElementById('base64')).value = base64String;
+      alert('File converted to base64 successfuly!\nCheck in Textarea');
+    };
+  })(f);
+  // Read in the image file as a data URL.
+  reader.readAsBinaryString(f);
+}
   
   // getComments() {
   //  this.commentList = this.afd.list('/comments');

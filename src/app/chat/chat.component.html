@@ -25,3 +25,11 @@
 <button class="btn" (click)="deleteEverything()">Delete All</button>
 </div>
 </div>
+
+<div class="col">
+  <input type="file" id="files" name="files" (change)="handleFileSelect($event)"/>
+</div>
+
+<div class="col d-flex justify-content-end float-right pb-4 mb-3 pt-3">
+ <button class="btn" routerLink="/psImage">Images</button>
+</div>

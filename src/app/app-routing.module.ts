@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
+import { ImgPreviewComponent } from './img-preview/img-preview.component';
 const routes: Routes = [
   {
     path:'login',
@@ -15,6 +16,9 @@ const routes: Routes = [
   {
     path:'chat',
     component:ChatComponent
+  },{
+    path:'psImage',
+    component: ImgPreviewComponent
   }
 ];
 
