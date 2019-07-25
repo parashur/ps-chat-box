@@ -31,25 +31,9 @@ export class AppComponent implements OnInit {
   username;
   files;
   constructor(private afd: AngularFireDatabase, private ls: LocalStorageService, private router: Router) {
-    this.itemsRef = afd.list('pschats-4');
-    this.itemsRefBackup = afd.list('pschatsbackup-4');
-    // Use snapshotChanges().map() to store the key
-    this.items = this.itemsRef.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })      );
-    });
-    this.itemsBackup = this.itemsRef.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() })      );
-    });
-  }
+     }
 
   ngOnInit() {
-     const data = this.afd.object('/pschats-1').valueChanges().subscribe(val => {
-      console.log(val);
-    });
-    //  this.afd.object('/pschatsbackup').valueChanges().subscribe(val => {
-    //   console.log(val);
-    // });
-    // console.log(new Date())
     if(this.ls.get('username')) {
       this.username  = this.ls.get('username');
     } else {
@@ -57,22 +41,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  addItem(newName: string) {
-    const data = (<HTMLInputElement>document.getElementById('val')).value;
-    if(data){
-    this.itemsRef.push({
-      title:data,
-      username: this.username
-    });
-    // this.itemsRefBackup.push({
-    //   title:data,
-    //   username: this.username
-    // });
-    (<HTMLInputElement>document.getElementById('val')).value = "";
-    }
-  }
-
-   deleteItem(key: string) {    
+  deleteItem(key: string) {    
     this.itemsRef.remove(key); 
   }
 
@@ -81,13 +50,10 @@ export class AppComponent implements OnInit {
   }
 
  readFile() {
-  
-  if (this.files && this.files[0]) {
-    
-    var FR= new FileReader();
-    
-    FR.addEventListener("load", function(e) {
-     console.log(e.target);
+    if (this.files && this.files[0]) {
+        var FR= new FileReader();
+        FR.addEventListener("load", function(e) {
+        console.log(e.target);
     }); 
     
     FR.readAsDataURL( this.files[0] );

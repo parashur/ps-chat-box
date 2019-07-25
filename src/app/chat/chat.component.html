@@ -27,7 +27,10 @@
 </div>
 
 <div class="col">
-  <input type="file" id="files" name="files" (change)="handleFileSelect($event)"/>
+  <input type="file" id="files" name="files" (change)="encodeImageFileAsURL($event)"/>
+  <input type="file" name="file" id="file" class="inputfile" />
+<label for="file" class="bg-light p-2">Choose a file</label>
+
 </div>
 
 <div class="col d-flex justify-content-end float-right pb-4 mb-3 pt-3">

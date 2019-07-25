@@ -1,3 +1,7 @@
-<!-- <div *ngFor="let img of itemsRefIMG">
-  <img [src]="img?.image" class="sample">
-</div>  -->
+<div class="col-lg-5 col-12">
+<div class="border col mb-3 img-thumbnail p-3" *ngFor="let img of itemsImageLists;let i=index">
+  <img [src]="img?.img" [width]="width[i]" [height]="height[i]" class="sample">
+  <button class="col-12 btn mb-2" (click)="zoomIn(i)">zoom in</button>
+    <button  class="col-12 btn" (click)="zoomOut(i)">zoom out</button>
+</div> 
+</div>

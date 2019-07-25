@@ -14,30 +14,30 @@ export interface ViewMemoriesItem {
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-  displayedColumns = ['date', 'text'];
-  subscription: Subscription;
   memory: any = {};
   name = 'chat now';
   position = 'float-left';
   positionFromUser;
   messages = [];
-  // items: FirebaseListObservable<any>;
   msgVal: string = '';
   itemsRef;
   items = [];
   username;
   itemsRefIMG;
   itemsImageList = [];
+  preview;
   constructor(private afd: AngularFireDatabase, private ls: LocalStorageService) {
     this.itemsRef = afd.list('posts');
-     this.itemsRefIMG = afd.list('psimagtest');
+    this.itemsRefIMG = afd.list('psimagtest');
     // Use snapshotChanges().map() to store the key
     this.items = this.itemsRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
-     this.itemsImageList = this.itemsRefIMG.snapshotChanges().map(changes => {
+    this.itemsImageList = this.itemsRefIMG.snapshotChanges().map(changes => {
+        console.log(changes);
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
+       console.log(" ds",this.itemsImageList);
   }
 
   ngOnInit() {
@@ -67,31 +67,22 @@ export class ChatComponent implements OnInit {
     this.itemsRef.remove();
   }
 
-  
-handleFileSelect(evt) {
-  var f = evt.target.files[0]; // FileList object
-  var reader = new FileReader();
-  // Closure to capture the file information.
-  reader.onload = (function(theFile) {
-    return function(e) {
-      var binaryData = e.target.result;
-      //Converting Binary Data to base 64
-      var base64String = window.btoa(binaryData);
-      //showing file converted to base64
-      const data = {
-        img: (base64String).toString()
-      };
-         console.log(base64String);
-       if(base64String) {
-       this.itemsImageList.push(data);
-          evt.target.value = [];
-        }
-      alert('File converted to base64 successfuly!\nCheck in Textarea');
-    };
-  })(f);
-  // Read in the image file as a data URL.
-  reader.readAsBinaryString(f);
-}
+  encodeImageFileAsURL(element) {
+    var file = element.target.files[0];
+    var reader = new FileReader();
+    reader.onload = (e) => {
+      this.ls.set('psimg', reader.result);
+    }
+    this.preview = this.ls.get('psimg');
+    console.log('RESULT', this.preview);
+    if (this.preview) {
+      this.itemsRefIMG.push( {
+        'img' : this.preview
+      });
+      element.target.value = [];
+    }
+    reader.readAsDataURL(file);
+  }
 
 
   // getComments() {
