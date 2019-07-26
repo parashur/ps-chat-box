@@ -10,7 +10,7 @@ import { ChatComponent } from './chat/chat.component';
 import { LoginComponent } from './login/login.component';
 import { WebStorageModule } from 'ngx-store';
 import { ImgPreviewComponent } from './img-preview/img-preview.component';
-
+import { AngularFireAuthModule } from 'angularfire2/auth';
 export const firebase = {
   apiKey: "AIzaSyAAbOpC7XLZjmu9MJ0HtiiuQXxAhM0GOYE",
   authDomain: "chat-peace-s.firebaseapp.com",
@@ -27,6 +27,7 @@ export const firebase = {
     AngularFireModule.initializeApp(firebase),
     WebStorageModule,
     AppRoutingModule,
+    AngularFireAuthModule,
     AngularFireDatabaseModule],
   declarations: [
   AppComponent, 
